@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<HTML>
+
+<HEAD>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        td{
+            padding: 10px;
+        }
+        div {
+            border: 1px solid black;
+        }
+    </style>
+</HEAD>
+
+
+<BODY>
+
+    <h2>How many times should u compound your investment per day?</h2>
+
+    <input type="button" value="Genrate Table" id="generateTable" onclick="generate_table()">
+    <br><br>
+    <label for="dailyAPR">Daily APR:</label>
+    <input type="text" id="dailyAPR" name="dailyAPR" value="8.00"><br><br>
+
+    <label for="days">Days:</label>
+    <input type="text" id="days" name="days" value="30"><br><br>
+
+    <label for="Principal:">Amount:</label>
+    <input type="text" id="principal" name="principal" value="14000"><br><br>
+
+    <label for="compoundNtimes:">Compound n Times:</label>
+    <input type="text" id="compoundNtimes" name="compoundNtimes" value="10">
+
+
+    <div id="debugDiv">
+
+    </div>
+
+<script>
+function generate_table(){
+
+var r = document.getElementById("dailyAPR").value / 100;
+var t = document.getElementById("days").value;
+var P = document.getElementById("principal").value;
+var n = document.getElementById("compoundNtimes").value;
+
+var body = document.getElementsByTagName("body")[0];
+var debugDiv = document.getElementById("debugDiv");
+
+var tbl = document.createElement("table");
+var tblBody = document.createElement("tbody");
+
+var defaultComp = P * Math.pow(1+(r/1), 1*t);
+
+//debugDiv.innerHTML += "dailyAPR = " + r;
+//debugDiv.innerHTML += "<br>days = " + t;
+
+// creating all cells
+for(var i=1 ; i <= n ; i++){
+    //debugDiv.innerHTML += i;
+    var row = document.createElement("tr");
+    //write compounding n days
+    var cell = document.createElement("td");
+    var cellText = document.createTextNode(i);
+    cell.appendChild(cellText);
+    row.appendChild(cell);
+
+    // write future value compounding n days
+    var a = P * Math.pow(1+(r/i), i*t);
+    var cell2 = document.createElement("td");
+    var cellText2 = document.createTextNode(a);
+    cell2.appendChild(cellText2);
+    row.appendChild(cell2);
+
+    // write how much more $ is made by additional compounding per day
+    var extraAmountMade = a - defaultComp;
+    var cell3 = document.createElement("td");
+    var cellText3 = document.createTextNode(extraAmountMade);
+    cell3.appendChild(cellText3);
+    row.appendChild(cell3);
+    //add the row to the end of the table body
+    tblBody.appendChild(row);
+}
+// put the <tbody> in the <table>
+tbl.appendChild(tblBody);
+body.appendChild(tbl);
+
+
+}
+</script>
+
+
+
+
+
+</BODY>
+
+
+
+
+</HTML>
